@@ -14,8 +14,25 @@ int main()
 {
 
 	DES enc;
+	string mes;
+	int n;
 
-	cout << endl;
+	/*cout << "Security and Encryption - Data Encryption Standard (DES): " << endl;
+
+	cout << "Enter message to  be encrypted: " << endl;
+	cin >> mes;
+
+	enc.setMessage(mes);
+	enc.prepMessage();
+
+	cout << "\n\n" << enc.getMessage() << endl;
+	
+	enc.stringtoASCII();
+	*/
+
+	cin >> n;
+
+	cout << "\n\n" << enc.asciitoBIN(n) << endl;
 
 	system("pause");
 

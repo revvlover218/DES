@@ -15,6 +15,9 @@ class DES
 
 private:
 	string message;	//message to be encrypted
+	int keyround = 16;
+	int arr[8];
+	int asciitobin[8*8];
 
 public:
 
@@ -24,7 +27,12 @@ public:
 	string getMessage();
 	void setMessage(string);
 
+	//Encryption
+	void prepMessage();
+	void stringtoASCII();
+	int asciitoBIN(int);
+
+	//Decryption
 
 };
-
 #endif
