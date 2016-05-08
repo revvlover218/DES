@@ -82,10 +82,22 @@ string keySchedule::getkeyInput()
 	return keyinput;
 }
 
+int keySchedule::getkeyArr(int i)
+{
+	return keyArr[i];
+}
+
+
+
 //Mutator
 void keySchedule::setkeyInput(string key)
 {
 	keyinput = key;
+}
+
+void keySchedule::setkeyArr(int pos, int val)
+{
+	keyArr[pos] = val;
 }
 
 
@@ -148,7 +160,7 @@ void keySchedule::inputKeyword()
 		//  cout << "Final Key: " << endl;
 		cout << keyinput << endl;
 
-		stringtoASCII(keyinput);
+		stringtoASCIItoBin(keyinput);
 	}
 
 	else if (keyinput.length() > 7)	//else if it is greater than 8 trim to length of 8 characters.
@@ -161,13 +173,13 @@ void keySchedule::inputKeyword()
 		keyinput = keyinput.substr(0, 8);
 		cout << "Updated key: " << keyinput << endl;
 
-		stringtoASCII(keyinput);
+		stringtoASCIItoBin(keyinput);
 	}
 
 
 }
 
-void keySchedule::stringtoASCII(string keyinput)
+void keySchedule::stringtoASCIItoBin(string keyinput)
 {
 
 	int keyArr[8];

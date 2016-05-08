@@ -41,6 +41,7 @@ class keySchedule
 private:
  const int keyround = 16;
  string keyinput;
+ int keyArr[8];
 
 
 public:
@@ -48,17 +49,15 @@ public:
 	//Accessor
 
 	string getkeyInput();
-
+	int getkeyArr(int);
 	//Mutator
 	void setkeyInput(string);
-
+	void setkeyArr(int, int);
 
 
 
 	void inputKeyword();
-	void stringtoASCII(string);
-
-	void stringtoASCII();
+	void stringtoASCIItoBin(string);
 	int asciitoBIN(int);
 
 };
