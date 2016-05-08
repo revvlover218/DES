@@ -89,41 +89,40 @@ void keySchedule::setkeyInput(string key)
 }
 
 
-void keySchedule::inputKeyword(string tempkey)
+void keySchedule::inputKeyword()
 {
-
 
 	int binkeyArr[8][8]; //2D array to store 64 bit ascii codes
 
-	//Remove spaces
-	for (int i = 0; i < tempkey.length(); i++)
+	for (int i = 0; i < keyinput.length(); i++) //Remove spaces
 	{
-		if (tempkey[i] == ' ')
-			tempkey.erase(i, 1);
+		if (keyinput[i] == ' ')
+			keyinput.erase(i, 1);
 	}
 
-	for (int i = 0; i < tempkey.length(); i++)
-		tempkey[i] = static_cast<char>(toupper(tempkey[i]));	//Converts each character to upper case
+	for (int i = 0; i < keyinput.length(); i++)		//Converts each character to upper case
+		keyinput[i] = static_cast<char>(toupper(keyinput[i]));	
 
-	if (tempkey.length() < 8)	//if length of keyword is less than 8 insert filler characters.
+	if (keyinput.length() < 8)	//if length of keyword is less than 8 insert filler characters.
 	{
 
 		char filler; //default filler character
-		int testfillq = 0; //test if filler character exists in message, if it does (testfill = 1) use next character (Q, X, Z)
+		int testfillq = 0; //test if filler character exists in message, if it does (testfill = 1) use next character
 		int testfillx = 0;
 		int testfillz = 0;
+
 		int len; //subtract 8 from keyword
 		string fillerarr;
 
 		//Find appropriate filler character
-		for (int i = 0; i < tempkey.length(); i++)
+		for (int i = 0; i < keyinput.length(); i++)
 		{
 
-			if (tempkey[i] == 'Q')
+			if (keyinput[i] == 'Q')
 				testfillq = 1;
-			if (tempkey[i] == 'X')
+			if (keyinput[i] == 'X')
 				testfillx = 1;
-			if (tempkey[i] == 'Z')
+			if (keyinput[i] == 'Z')
 				testfillz = 1;
 		}
 
@@ -136,48 +135,49 @@ void keySchedule::inputKeyword(string tempkey)
 		else
 			filler = 'X';
 
-		//cout << "Key length is less than 8 using filler characters as well." << endl;
-		//cout << "Key length: " << tempkey.length() << endl;
+		cout << "Key length is less than 8 using filler characters as well." << endl;
+		//cout << "Key length: " << keyinput.length() << endl;
 
-		len = 8 - tempkey.length();
-		for (int i = 0; i < len; i++)	//create string of filler characters to make length of 8 characters for key
-			fillerarr += filler;
-		tempkey.append(fillerarr);
+		len = 8 - keyinput.length();
+		
+		for (int i = 0; i < len; i++)	//create string of filler characters to append to keyinput
+			fillerarr += filler;		//to make length of 8 characters.
+		keyinput.append(fillerarr);
 
-		//	cout << "New Key length: " << tempkey.length() << endl;
+		//	cout << "New Key length: " << keyinput.length() << endl;
 		//  cout << "Final Key: " << endl;
-		cout << tempkey << endl;
+		cout << keyinput << endl;
 
-		stringtoASCII(tempkey);
+		stringtoASCII(keyinput);
 	}
 
-	else if (tempkey.length() > 7)	//else if it is greater than 8 trim to length of 8 characters.
+	else if (keyinput.length() > 7)	//else if it is greater than 8 trim to length of 8 characters.
 	{
 
-		//cout << "Key entered is longer than  characters taking the first 8 charcters instead. " << endl;
-		//cout << "Key length: " << tempkey.length() << endl;
-		cout << "Key entered: " << tempkey << endl;
+		cout << "Taking the first 8 charcters. " << endl;
+		//cout << "Key length: " << keyinput.length() << endl;
+		cout << "Key entered: " << keyinput << endl;
 
-		tempkey = tempkey.substr(0, 8);
-		cout << "Updated key: " << tempkey << endl;
+		keyinput = keyinput.substr(0, 8);
+		cout << "Updated key: " << keyinput << endl;
 
-		stringtoASCII(tempkey);
-
+		stringtoASCII(keyinput);
 	}
+
 
 }
 
-void keySchedule::stringtoASCII(string tempkey)
+void keySchedule::stringtoASCII(string keyinput)
 {
 
 	int keyArr[8];
-	//	cout << "Convert to equivalent ASCII integer: " << endl;
-	for (int i = 0; i < tempkey.length(); i++)
-		keyArr[i] = int(tempkey[i]);
+	
+	cout << "\nEquivalent ASCII integer: " << endl;
+	for (int i = 0; i < keyinput.length(); i++)
+		keyArr[i] = int(keyinput[i]);
 
 	for (int i = 0; i < 8; i++)
 		cout << keyArr[i] << " ";
-
 }
 
 int keySchedule::asciitoBIN(int n)

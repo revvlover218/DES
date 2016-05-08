@@ -15,12 +15,18 @@ int main()
 
 	DES enc;
 	keySchedule ks;
-	string mes;
-	int n;
+
+	string keyinput;
+	cout << "Enter 8 - character keyword to be used: " << endl;
+	getline(cin, keyinput);
+
+	ks.setkeyInput(keyinput);
+	ks.inputKeyword();
 
 
 
+
+	cout << endl;
 	system("pause");
-
 	return 0;
 }

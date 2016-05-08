@@ -42,6 +42,7 @@ private:
  const int keyround = 16;
  string keyinput;
 
+
 public:
 	//Accessor and Mutator functions
 	//Accessor
@@ -54,7 +55,7 @@ public:
 
 
 
-	void inputKeyword(string);
+	void inputKeyword();
 	void stringtoASCII(string);
 
 	void stringtoASCII();
