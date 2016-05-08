@@ -15,7 +15,7 @@ class DES
 
 private:
 	string message;	//message to be encrypted
-	int keyround = 16;
+
 	int arr[8];
 	int asciitobin[8*8];
 
@@ -29,10 +29,40 @@ public:
 
 	//Encryption
 	void prepMessage();
-	void stringtoASCII();
-	int asciitoBIN(int);
+	
 
 	//Decryption
 
 };
+
+class keySchedule
+{
+
+private:
+ const int keyround = 16;
+ string keyinput;
+
+public:
+	//Accessor and Mutator functions
+	//Accessor
+
+	string getkeyInput();
+
+	//Mutator
+	void setkeyInput(string);
+
+
+
+
+	void inputKeyword(string);
+	void stringtoASCII(string);
+
+	void stringtoASCII();
+	int asciitoBIN(int);
+
+};
+
+
+
+
 #endif
