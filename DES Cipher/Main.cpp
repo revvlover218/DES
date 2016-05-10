@@ -17,12 +17,30 @@ int main()
 	keySchedule ks;
 
 	string keyinput;
+	int count = 0;
+
+
+
 	cout << "Enter 8 - character keyword to be used: " << endl;
 	getline(cin, keyinput);
 
-	ks.setkeyInput(keyinput);
+	ks.setkeyInput(keyinput); 
 	ks.inputKeyword();
 
+	cout << endl;
+	cout << "Binary representation of ASCII code: " << endl;
+	ks.asciitoBIN();
+	for (int i = 0; i < 8; i++)
+	{
+		cout << ks.getasccitoBin(i) << endl;
+		count++;
+	}
+		
+	cout << "Total number of bits: " << ks.getasccitoBin(0).size()*count << endl;
+	
+	cout << "Binary codes after removing parity bits: " << endl;
+	ks.removeParity();
+	cout << "Total number of bits: " << ks.getremovePar(0).size()*count << endl;
 
 
 

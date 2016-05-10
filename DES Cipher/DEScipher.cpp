@@ -8,6 +8,7 @@
 #include "iostream"
 #include "string"
 #include "cctype"
+#include "bitset"
 
 using namespace std;
 
@@ -82,12 +83,20 @@ string keySchedule::getkeyInput()
 	return keyinput;
 }
 
-int keySchedule::getkeyArr(int i)
+int keySchedule::getasciiInt(int i)
 {
-	return keyArr[i];
+	return asciiInt[i];
 }
 
+bitset<8> keySchedule::getasccitoBin(int i)
+{
+	return asciitoBin[i];
+}
 
+bitset<7> keySchedule::getremovePar(int i)
+{
+	return removePar[i];
+}
 
 //Mutator
 void keySchedule::setkeyInput(string key)
@@ -95,16 +104,25 @@ void keySchedule::setkeyInput(string key)
 	keyinput = key;
 }
 
-void keySchedule::setkeyArr(int pos, int val)
+void keySchedule::setasciiInt(int pos, int val)
 {
-	keyArr[pos] = val;
+	asciiInt[pos] = val;
 }
 
+void keySchedule::setasciitoBin(int pos, int val)
+{
+	asciiInt[pos] = val;
+}
+
+void keySchedule::setremovePar(int pos, int val)
+{
+	removePar[pos] = val;
+}
 
 void keySchedule::inputKeyword()
 {
 
-	int binkeyArr[8][8]; //2D array to store 64 bit ascii codes
+	int binasciiInt[8][8]; //2D array to store 64 bit ascii codes
 
 	for (int i = 0; i < keyinput.length(); i++) //Remove spaces
 	{
@@ -160,7 +178,7 @@ void keySchedule::inputKeyword()
 		//  cout << "Final Key: " << endl;
 		cout << keyinput << endl;
 
-		stringtoASCIItoBin(keyinput);
+		stringtoASCII(keyinput);
 	}
 
 	else if (keyinput.length() > 7)	//else if it is greater than 8 trim to length of 8 characters.
@@ -173,29 +191,47 @@ void keySchedule::inputKeyword()
 		keyinput = keyinput.substr(0, 8);
 		cout << "Updated key: " << keyinput << endl;
 
-		stringtoASCIItoBin(keyinput);
+		stringtoASCII(keyinput);
 	}
 
 
 }
 
-void keySchedule::stringtoASCIItoBin(string keyinput)
+void keySchedule::stringtoASCII(string keyinput)
 {
 
-	int keyArr[8];
-	
 	cout << "\nEquivalent ASCII integer: " << endl;
 	for (int i = 0; i < keyinput.length(); i++)
-		keyArr[i] = int(keyinput[i]);
+		asciiInt[i] = int(keyinput[i]);
 
 	for (int i = 0; i < 8; i++)
-		cout << keyArr[i] << " ";
+		cout << asciiInt[i] << " ";
 }
 
-int keySchedule::asciitoBIN(int n)
+void keySchedule::asciitoBIN()
 {
+	for (int i = 0; i < 8; i++)
+	{
+		asciitoBin[i] = asciiInt[i];
+	}
+}
 
-	if (n == 0)
-		return n;
-	else return (n % 2) + (10 * asciitoBIN(n / 2));
+void keySchedule::removeParity()
+{
+	
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			removePar[i][j] = asciitoBin[i][j];
+		}
+		
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << removePar[i] << endl;
+	}
+
 }

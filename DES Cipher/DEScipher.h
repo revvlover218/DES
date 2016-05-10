@@ -7,6 +7,7 @@
 #ifndef DESCIPHER_H
 #define DESCIPHER_H
 #include "string"
+#include "bitset"
 
 using namespace std;
 
@@ -41,7 +42,9 @@ class keySchedule
 private:
  const int keyround = 16;
  string keyinput;
- int keyArr[8];
+ int asciiInt[8];
+ bitset<8> asciitoBin[8];
+ bitset<7> removePar[8];
 
 
 public:
@@ -49,16 +52,19 @@ public:
 	//Accessor
 
 	string getkeyInput();
-	int getkeyArr(int);
+	int getasciiInt(int);
+	bitset<8> getasccitoBin(int);
+	bitset<7> getremovePar(int);
 	//Mutator
 	void setkeyInput(string);
-	void setkeyArr(int, int);
-
-
+	void setasciiInt(int, int);
+	void setasciitoBin(int, int);
+	void setremovePar(int, int);
 
 	void inputKeyword();
-	void stringtoASCIItoBin(string);
-	int asciitoBIN(int);
+	void stringtoASCII(string);
+	void asciitoBIN();
+	void removeParity();		//Remove parity bits after ascii code has been cinverted to binary
 
 };
 
