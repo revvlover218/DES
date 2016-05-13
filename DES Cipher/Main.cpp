@@ -31,7 +31,10 @@ int main()
 	ks.asciitoBIN(); //convert ascii code to binary code which is stored in an intial key
 	cout << endl;
 	ks.applyPC1(); //Apply PC1 table to that initial key
-
+	cout << endl;
+	ks.applyRotation();
+	cout << endl;
+	ks.applyPC2();
 
 
 	cout << endl;

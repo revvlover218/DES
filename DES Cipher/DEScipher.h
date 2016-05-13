@@ -46,11 +46,15 @@ private:
  bitset<8> asciitoBin[8]; //store binary version of ascii code
  int asciitoBinary_64[64]; 
 
- //PC-1 table
- //int PC1[56] = { 57, 49, 41, 33, 25, 17, 9, 1, 58, 50, 42, 34, 26, 18, 10, 2, 59, 51, 43, 35, 27, 19, 11, 3, 60, 52, 44, 36, 63, 55, 47, 39, 31, 23, 15, 7, 62, 54, 46, 38, 30, 22, 14, 6, 61, 53, 45, 37, 29, 21, 13, 5, 28, 20, 12, 4 };
 
- int initialKey[16][56]; //Stores the result of PC1 and after bits have been shifted.
+ int initialKey[17][56];	//Stores the result of PC1 (64- bit -> 56- bit).
 
+ int Cn[28];			//initialKey[n] = Kn = Cn*Dn where Cn is the first 28- bits (0 - 27) and Dn is the 
+ int Dn[28];			//second 28- bits (28 - 55).
+ int CnR[28];			//Result of Cn and Dn after rotation.
+ int DnR[28]; 
+
+ int finalKey[16][48]; 
 
 
 public:
@@ -71,6 +75,9 @@ public:
 	void stringtoASCII(string);
 	void asciitoBIN();
 	void applyPC1();
+	void applyRotation(); //When applying rotations key rounds: 1, 2, 9, and 16 are rotated only once, while each other 
+						  //round is rotated twice. 
+	void applyPC2();
 
 };
 

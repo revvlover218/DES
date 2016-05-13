@@ -184,8 +184,6 @@ void keySchedule::inputKeyword()
 
 		stringtoASCII(keyinput);
 	}
-
-
 }
 
 void keySchedule::stringtoASCII(string keyinput)
@@ -234,11 +232,14 @@ void keySchedule::asciitoBIN()
 
 		i++;
 	}
+
+	system("pause");
 }
 
 void keySchedule::applyPC1()
 {
 
+	system("cls");
 	//Integers in PC1 indicate the position of the element in the asciitoBin array to be to be taken
 	//and stored in the initialKey. Since PC1 is only 56 elements, it also reveals how the 64- bit binary number
 	//is reduced to the 56- bit binary number.
@@ -251,11 +252,11 @@ void keySchedule::applyPC1()
 		14, 6, 61, 53, 45, 37, 29,
 		21, 13, 5, 28, 20, 12, 4 };
 
-	cout << "Applying PC- 1 table to 64- bits." << endl;
+	cout << "Applying PC- 1 table to 64- bits to get 56- bits." << endl;
  
 	for (int i = 0; i < 56; i++)
 	{
-		initialKey[0][i] = asciitoBinary_64[PC1[i] - 1];	//
+		initialKey[0][i] = asciitoBinary_64[PC1[i] - 1];	
 	}
 
 	int k = 1;
@@ -267,5 +268,121 @@ void keySchedule::applyPC1()
 		if (k % 7 == 0)
 			cout << endl;
 		k++;
+	}
+
+	system("pause");
+}
+
+void keySchedule::applyRotation()
+{
+	system("cls");
+	cout << "Applying rotation (left shift) to get 16 keys." << endl;
+
+	for (int k = 1; k <= 16; k++)			//for 16 rounds (using familiar 1th notation)
+	{
+
+		for (int i = 0; i < 28; i++)		//for each half of 56 bit key (in C & D halves)
+		{
+
+			Cn[i] = initialKey[k - 1][i];			//C0 = K0_0 and so on.
+			Dn[i] = initialKey[k - 1][i + 28];		//D0 = K0_28 and so on.
+		}
+
+		if (k == 1 || k == 2 || k == 9 || k == 16)
+		{
+
+			CnR[0] = Cn[27];					//left shift the lsb and wrap around the array.
+			DnR[0] = Dn[27];
+
+			for (int i = 1; i < 28; i++)		//Shift rest of binary numbers in each half i.e. in C & D.
+			{
+
+				CnR[i] = Cn[i - 1];			
+				DnR[i] = Dn[i - 1];			
+			}
+
+		}
+
+		else
+		{
+
+			CnR[0] = Cn[26];		//Shift twice for the rest of the rounds which wrap around the array
+			CnR[1] = Cn[27];			
+
+			DnR[0] = Dn[26];		
+			DnR[1] = Dn[27];
+
+			for (int i = 2; i < 28; i++)	//Shift rest of binary numbers in each half i.e. in C & D.
+			{
+
+				CnR[i] = Cn[i - 2];			
+				DnR[i] = Dn[i - 2];
+			}
+		}
+
+		for (int i = 0; i < 28; i++)		
+		{
+
+			initialKey[k][i] = CnR[i];
+			initialKey[k][i + 28] = DnR[i];
+		}
+
+	}
+
+	for (int i = 1; i <= 16; i++)
+	{
+
+		int k = 1;
+		cout << "Key Round: " << i << endl;
+
+		while (k <= 56)
+		{
+
+			cout << initialKey[i][k - 1];
+
+			if (k % 7 == 0)
+				cout << endl;
+			k++;
+		}
+		
+	}
+	system("pause");
+}
+
+void keySchedule::applyPC2()
+{
+	system("cls");
+	cout << "Applying PC- 2 table to 56- bits to get 48- bits." << endl;
+
+	int PC2[48] = { 14, 17, 11, 24, 1, 5, 3, 28,
+		15, 6, 21, 10, 23, 19, 12, 4,
+		26, 8, 16, 7, 27, 20, 13, 2,
+		41, 54, 31, 37, 47, 55, 30, 40,
+		51, 45, 33, 48, 44, 49, 39, 56,
+		34, 53, 46, 42, 50, 36, 29, 32 };
+
+	for (int i = 0; i<16; i++)
+	{
+		for (int j = 0; j<48; j++)
+		{
+			finalKey[i][j] = initialKey[i + 1][PC2[j] - 1];
+		}
+	}
+	
+	for (int i = 0; i < 16; i++)
+	{
+
+		int k = 1;
+		cout << "\nFinal Key Round: " << i + 1 << endl;
+
+		while (k <= 48)
+		{
+
+			cout << finalKey[i][k - 1];
+
+			if (k % 6 == 0)
+				cout << "\t";
+			k++;
+		}
 	}
 }
