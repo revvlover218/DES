@@ -93,10 +93,6 @@ bitset<8> keySchedule::getasccitoBin(int i)
 	return asciitoBin[i];
 }
 
-bitset<7> keySchedule::getremovePar(int i)
-{
-	return removePar[i];
-}
 
 //Mutator
 void keySchedule::setkeyInput(string key)
@@ -112,11 +108,6 @@ void keySchedule::setasciiInt(int pos, int val)
 void keySchedule::setasciitoBin(int pos, int val)
 {
 	asciiInt[pos] = val;
-}
-
-void keySchedule::setremovePar(int pos, int val)
-{
-	removePar[pos] = val;
 }
 
 void keySchedule::inputKeyword()
@@ -210,28 +201,71 @@ void keySchedule::stringtoASCII(string keyinput)
 
 void keySchedule::asciitoBIN()
 {
+
+	//Store ascii numbers in binary data type which automatically converts integers to binary
 	for (int i = 0; i < 8; i++)
 	{
 		asciitoBin[i] = asciiInt[i];
 	}
+
+	//Store binary numbers into integer array so that PC1 can be applied to it
+	int k = 0;
+
+	for (int i = 0; i < 8; i++)
+	{
+
+		for (int j = 0; j < 8; j++)
+		{
+			asciitoBinary_64[k] =  asciitoBin[i][j];
+			k++;
+		}
+	}
+
+	cout << "Binary representation of ASCII code: " << endl;
+	int i = 1;
+
+	while (i <= 64)
+	{
+
+		cout << asciitoBinary_64[i-1];
+
+		if (i % 8 == 0)
+			cout << endl;
+
+		i++;
+	}
 }
 
-void keySchedule::removeParity()
+void keySchedule::applyPC1()
 {
-	
 
-	for (int i = 0; i < 8; i++)
+	//Integers in PC1 indicate the position of the element in the asciitoBin array to be to be taken
+	//and stored in the initialKey. Since PC1 is only 56 elements, it also reveals how the 64- bit binary number
+	//is reduced to the 56- bit binary number.
+	int PC1[56] = { 57, 49, 41, 33, 25, 17, 9,
+		1, 58, 50, 42, 34, 26, 18,
+		10, 2, 59, 51, 43, 35, 27,
+		19, 11, 3, 60, 52, 44, 36,
+		63, 55, 47, 39, 31, 23, 15,
+		7, 62, 54, 46, 38, 30, 22,
+		14, 6, 61, 53, 45, 37, 29,
+		21, 13, 5, 28, 20, 12, 4 };
+
+	cout << "Applying PC- 1 table to 64- bits." << endl;
+ 
+	for (int i = 0; i < 56; i++)
 	{
-		for (int j = 0; j < 7; j++)
-		{
-			removePar[i][j] = asciitoBin[i][j];
-		}
-		
+		initialKey[0][i] = asciitoBinary_64[PC1[i] - 1];	//
 	}
 
-	for (int i = 0; i < 8; i++)
+	int k = 1;
+	while (k <= 56)
 	{
-		cout << removePar[i] << endl;
-	}
 
+		cout << initialKey[0][k-1];
+
+		if (k % 7 == 0)
+			cout << endl;
+		k++;
+	}
 }
