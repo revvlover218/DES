@@ -93,7 +93,6 @@ bitset<8> keySchedule::getasccitoBin(int i)
 	return asciitoBin[i];
 }
 
-
 //Mutator
 void keySchedule::setkeyInput(string key)
 {
@@ -169,7 +168,7 @@ void keySchedule::inputKeyword()
 		//  cout << "Final Key: " << endl;
 		cout << keyinput << endl;
 
-		stringtoASCII(keyinput);
+		stringtoASCII(keyinput); //convert string to ascii integers
 	}
 
 	else if (keyinput.length() > 7)	//else if it is greater than 8 trim to length of 8 characters.
@@ -182,7 +181,7 @@ void keySchedule::inputKeyword()
 		keyinput = keyinput.substr(0, 8);
 		cout << "Updated key: " << keyinput << endl;
 
-		stringtoASCII(keyinput);
+		stringtoASCII(keyinput); //convert string to ascii integers
 	}
 }
 
@@ -190,7 +189,7 @@ void keySchedule::stringtoASCII(string keyinput)
 {
 
 	cout << "\nEquivalent ASCII integer: " << endl;
-	for (int i = 0; i < keyinput.length(); i++)
+	for (int i = 0; i < keyinput.length(); i++)		//Type cast string to integer
 		asciiInt[i] = int(keyinput[i]);
 
 	for (int i = 0; i < 8; i++)
@@ -219,6 +218,7 @@ void keySchedule::asciitoBIN()
 		}
 	}
 
+	//Display ascii code in binary.
 	cout << "Binary representation of ASCII code: " << endl;
 	int i = 1;
 
@@ -240,9 +240,8 @@ void keySchedule::applyPC1()
 {
 
 	system("cls");
-	//Integers in PC1 indicate the position of the element in the asciitoBin array to be to be taken
-	//and stored in the initialKey. Since PC1 is only 56 elements, it also reveals how the 64- bit binary number
-	//is reduced to the 56- bit binary number.
+
+	//PC- 1 table
 	int PC1[56] = { 57, 49, 41, 33, 25, 17, 9,
 		1, 58, 50, 42, 34, 26, 18,
 		10, 2, 59, 51, 43, 35, 27,
@@ -259,6 +258,7 @@ void keySchedule::applyPC1()
 		initialKey[0][i] = asciitoBinary_64[PC1[i] - 1];	
 	}
 
+	//Display key after PC- 1
 	int k = 1;
 	while (k <= 56)
 	{
@@ -275,24 +275,26 @@ void keySchedule::applyPC1()
 
 void keySchedule::applyRotation()
 {
-	system("cls");
-	cout << "Applying rotation (left shift) to get 16 keys." << endl;
 
-	for (int k = 1; k <= 16; k++)			//for 16 rounds (using familiar 1th notation)
+	system("cls");
+	
+	cout << "Applying rotation (left shift) to get 16 keys for the 16 rounds." << endl;
+
+	for (int k = 1; k <= 16; k++)			//For 16 rounds.
 	{
 
-		for (int i = 0; i < 28; i++)		//for each half of 56 bit key (in C & D halves)
+		for (int i = 0; i < 28; i++)		//Store each half of 56- bit key in C & D each of length 28.
 		{
 
-			Cn[i] = initialKey[k - 1][i];			//C0 = K0_0 and so on.
-			Dn[i] = initialKey[k - 1][i + 28];		//D0 = K0_28 and so on.
+			Cn[i] = initialKey[k - 1][i];			//Cn = Kn_0 (store first half of 56- bits).
+			Dn[i] = initialKey[k - 1][i + 28];		//Dn = Kn_28 (store second half of 56- bits).
 		}
 
-		if (k == 1 || k == 2 || k == 9 || k == 16)
+		if (k == 1 || k == 2 || k == 9 || k == 16)	//Key rounds: 1, 2, 9, and 16 are rotated only once. 
 		{
 
-			CnR[0] = Cn[27];					//left shift the lsb and wrap around the array.
-			DnR[0] = Dn[27];
+			CnR[0] = Cn[27];		//Left shift the lsb and wrap around the end of C to the beginning.
+			DnR[0] = Dn[27];		//Left shift the lsb and wrap around the end of D to the beginning.
 
 			for (int i = 1; i < 28; i++)		//Shift rest of binary numbers in each half i.e. in C & D.
 			{
@@ -300,16 +302,15 @@ void keySchedule::applyRotation()
 				CnR[i] = Cn[i - 1];			
 				DnR[i] = Dn[i - 1];			
 			}
-
 		}
 
 		else
 		{
-
-			CnR[0] = Cn[26];		//Shift twice for the rest of the rounds which wrap around the array
+									//For the rest of the rounds:
+			CnR[0] = Cn[26];		//Left shift twice and wrap around the end of C to the beginning.
 			CnR[1] = Cn[27];			
 
-			DnR[0] = Dn[26];		
+			DnR[0] = Dn[26];		//Left shift twice and wrap around the end of D to the beginning.
 			DnR[1] = Dn[27];
 
 			for (int i = 2; i < 28; i++)	//Shift rest of binary numbers in each half i.e. in C & D.
@@ -320,15 +321,15 @@ void keySchedule::applyRotation()
 			}
 		}
 
-		for (int i = 0; i < 28; i++)		
+		for (int i = 0; i < 28; i++)		//Store the result back in the initialKey		
 		{
 
 			initialKey[k][i] = CnR[i];
 			initialKey[k][i + 28] = DnR[i];
 		}
-
 	}
 
+	//Display all keys generated.
 	for (int i = 1; i <= 16; i++)
 	{
 
@@ -344,16 +345,19 @@ void keySchedule::applyRotation()
 				cout << endl;
 			k++;
 		}
-		
 	}
+
 	system("pause");
 }
 
 void keySchedule::applyPC2()
 {
+
 	system("cls");
+	
 	cout << "Applying PC- 2 table to 56- bits to get 48- bits." << endl;
 
+	//PC- 2 table.
 	int PC2[48] = { 14, 17, 11, 24, 1, 5, 3, 28,
 		15, 6, 21, 10, 23, 19, 12, 4,
 		26, 8, 16, 7, 27, 20, 13, 2,
@@ -369,6 +373,7 @@ void keySchedule::applyPC2()
 		}
 	}
 	
+	//Display keys after PC2 has been applied
 	for (int i = 0; i < 16; i++)
 	{
 
