@@ -39,7 +39,8 @@ void DES::prepMessage()
 			message.erase(i, 1);
 	}
 
-
+	for (int i = 0; i < message.length(); i++)		//Converts each character to upper case
+		message[i] = static_cast<char>(toupper(message[i]));
 
 
 
