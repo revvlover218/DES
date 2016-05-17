@@ -42,19 +42,19 @@ void DES::prepMessage()
 	for (int i = 0; i < message.length(); i++)		//Converts each character to upper case
 		message[i] = static_cast<char>(toupper(message[i]));
 
-	if (message.length() < 8)	//if length of plaintext is less than 8 insert filler characters.
+	if (message.length() % 8 != 0)	//if length of plaintext is not 8 insert filler characters.
 	{
 
-		char filler; //default filler character
+		string fillerarr;		//default filler character
 		int testfillq = 0; //test if filler character exists in message, if it does (testfill = 1) use next character
 		int testfillx = 0;
 		int testfillz = 0;
 
-		int len; //subtract 8 from plaintext length
-		string fillerarr;
-
+		int len = message.length();
+		int filllength = 8 - (len % 8);
+		
 		//Find appropriate filler character
-		for (int i = 0; i < message.length(); i++)
+		for (int i = 0; i < len; i++)
 		{
 
 			if (message[i] == 'Q')
@@ -66,79 +66,214 @@ void DES::prepMessage()
 		}
 
 		if (testfillx == 0)
-			filler = 'X';
+			fillerarr = 'X';
 		else if (testfillz == 0)
-			filler = 'Z';
+			fillerarr = 'Z';
 		else if (testfillq == 0)
-			filler = 'Q';
+			fillerarr = 'Q';
 		else
-			filler = 'X';
+			fillerarr = 'X';
 
-		cout << "Plaintext length is less than 8 using filler characters as well." << endl;
-		cout << "Plaintext length: " << message.length() << endl;
+		cout << "\nPlaintext length is not a block of 8 characters. Using filler characters as well." << endl;
+		cout << "Current Plaintext length: " << len << endl;
 
-		len = 8 - message.length();
-
-		for (int i = 0; i < len; i++)	//create string of filler characters to append to keyinput
-			fillerarr += filler;		//to make length of 8 characters.
-		message.append(fillerarr);
-
-		cout << "New Plaintext length: " << message.length() << endl;
-		cout << "Final Message: " << endl;
-		cout << message << endl;
-
-		//stringtoASCII(keyinput); //convert string to ascii integers
-	}
-
-
-
-
-
-/*	string mes = message; 
-	char filler; //default filler character
-	int testfillq = 0; //test if filler character exists in message, if it does 
-	int testfillx = 0; //(testfill = 1) use next character (Q, X, Z)
-	int testfillz = 0;
-
-	
-
-	if (message.length() % 2 == 1)
-	{
-
-		//Check for filler character
-	    for (int i = 0; i < message.length(); i++)
+		for (int i = len; i < len + filllength; i++)
 		{
-
-			if (message[i] == 'q')
-				testfillq = 1;
-			if (message[i] == 'x')
-				testfillx = 1;
-			if (message[i] == 'z')
-				testfillz = 1;
+			message.append(fillerarr);
 		}
 
-		if (testfillx == 0)
-			filler = 'x';
-		else if (testfillz == 0)
-			filler = 'z';
-		else if (testfillq == 0)
-			filler = 'q';
+		len = message.length();
 
-				//Since encryption requires the characters of 
-										//the message to be in pairs, it means that 
-			mes += filler;			//the length of the string must be even. Therefore, if there is an odd number of 
-									//characters in the string insert an 'X' to make the length of the string even.
+		cout << "Blocks to be encrypted: " << endl;
+		for (int i = 0; i < len; i++)
+		{
+
+			if (i % 8 == 0)
+				cout << endl;
+			cout << message[i];
+		}
 		
+		cout << "\n\nNew length of plaintext: " << len << endl;
+	}
 
+	else if (message.length() == 8)
+	{
+	
+		cout << "\nMessage to be encrypted: " << endl;
+		for (int i = 0; i < message.size(); i++)
+		{
+
+			if (i % 8 == 0)
+			cout << endl;
+			cout << message[i];
+		}
+	
+		cout << endl;
 
 	}
 
-	for (int i = 0; i < mes.length(); i++)
-		mes[i] = static_cast<char>(toupper(mes[i]));	//Converts each character to upper case
-
-	message = mes;*/
-
+	messagetoAscii();
 }
+
+void DES::messagetoAscii()
+{
+
+	for (int i = 0; i < message.length(); i++)		//Type cast string to integer
+		ascii.push_back((int)message[i]);
+
+	cout << "\nEquivalent ASCII integers: " << endl;
+	for (int i = 0; i < ascii.size(); i++)
+	{
+
+		if (i % 8 == 0)
+			cout << endl;
+		cout << ascii[i] << " ";
+	}
+		
+	amestoBIN(); //ascii message to binary
+}
+
+void DES::amestoBIN()
+{
+
+	int temp[64];
+
+	//Store ascii numbers in binary data type which automatically converts integers to binary
+	for (int i = 0; i < ascii.size(); i++)
+		PasciitoBin.push_back(ascii[i]);
+
+	//cout << "\n\nEquivalent Binary values: " << endl;
+	
+	/*for (int i = 0; i < PasciitoBin.size(); i++)
+	{
+
+		for (int j = 7; j > -1; j--)
+			cout << PasciitoBin[i][j];
+
+		cout << endl;
+
+		if (i > 0)
+		{
+
+			if (i % 8 == 0)
+				cout << endl;
+		}
+	}*/
+
+	int k = 0;
+	//int b = 0;
+
+		for (int i = 0; i < PasciitoBin.size(); i++)
+		{
+
+			for (int j = 7; j > -1; j--)
+			{		
+				temp[k] = PasciitoBin[i][j]; //Store first set of 64- bits into temporary array
+				k++;
+				
+				if (k == 64)
+				{
+					
+					for (int l = 0; l < 64; l++)
+					{
+						PasciitoBinary_64_init[block][l] = temp[l];
+					}
+					
+					block++;
+					k = 0;
+				}
+			}
+		}
+	
+	cout << "\n\nEquivalent 64- bit Binary values for each block: " << endl;
+
+	for (int i = 0; i < block; i++)
+	{
+
+		cout << "Block: " << i + 1 << endl;
+
+		for (int j = 0; j < 64; j++)
+		{
+			cout << PasciitoBinary_64_init[i][j];
+		}
+
+		cout << endl << endl;
+	}
+
+	system("pause");
+}
+
+void DES::applyIP()
+{
+
+	system("cls");
+
+	//Initial Permutation (IP) table Permutes bits in each block of the message
+	int IP[64] = { 58, 50, 42, 34, 26, 18, 10, 2,
+		60, 52, 44, 36, 28, 20, 12, 4,
+		62, 54, 46, 38, 30, 22, 14, 6,
+		64, 56, 48, 40, 32, 24, 16, 8,
+		57, 49, 41, 33, 25, 17, 9, 1,
+		59, 51, 43, 35, 27, 19, 11, 3,
+		61, 53, 45, 37, 29, 21, 13, 5,
+		63, 55, 47, 39, 31, 23, 15, 7 };
+
+	for (int b = 0; b < block; b++)
+	{
+
+		for (int j = 0; j < 64; j++)
+			PasciitoBinary_64_final[b][j] = PasciitoBinary_64_init[b][IP[j] - 1];
+		
+	}
+
+	cout << "Applying Initial Permutation table to each block:" << endl;
+	for (int i = 0; i < block; i++)
+	{
+
+		cout << "Block: " << i + 1 << endl;
+
+		for (int j = 0; j < 64; j++)
+		{
+			cout << PasciitoBinary_64_final[i][j];
+		}
+
+		cout << endl << endl;
+	}
+
+	//Split the 64 bits of each block into halves- 32-bit each, left and right
+	for (int b = 0; b < block; b++)
+	{
+		for (int k = 0; k < 32; k++)
+		{
+			L0[b][k] = PasciitoBinary_64_final[b][k];
+			R0[b][k] = PasciitoBinary_64_final[b][k + 32];
+		}
+	}
+
+/*	cout << "Left: " << endl;
+	for (int b = 0; b < block; b++)
+	{
+		for (int k = 0; k < 32; k++)
+		{
+			cout << L0[b][k];
+		}
+		cout << endl;
+	}
+
+	cout << "Right " << endl;
+	for (int b = 0; b < block; b++)
+	{
+		for (int k = 0; k < 32; k++)
+		{
+			cout << R0[b][k];
+		}
+		cout << endl;
+	}*/
+
+	system("pause");
+}
+
+
 
 ////////////////////////////Key Schdeule//////////////////////////////////////
 //Accesoor and Mutator
@@ -253,7 +388,7 @@ void keySchedule::inputKeyword()
 void keySchedule::stringtoASCII(string keyinput)
 {
 
-	cout << "\nEquivalent ASCII integer: " << endl;
+	cout << "\nEquivalent ASCII integers: " << endl;
 	for (int i = 0; i < keyinput.length(); i++)		//Type cast string to integer
 		asciiInt[i] = int(keyinput[i]);
 
@@ -276,7 +411,7 @@ void keySchedule::asciitoBIN()
 	for (int i = 0; i < 8; i++)
 	{
 
-		for (int j = 0; j < 8; j++)
+		for (int j = 7; j > -1; j--)
 		{
 			asciitoBinary_64[k] =  asciitoBin[i][j];
 			k++;

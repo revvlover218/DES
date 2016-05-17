@@ -23,14 +23,14 @@ int main()
 	//Get message
 	cout << "Enter message to be encrypted: " << endl;
 	getline(cin, P);
+
 	enc.setMessage(P);
-
 	enc.prepMessage();
-	cout << "Message:" << endl;
-	cout << enc.getMessage() << endl;
+	enc.applyIP();
+	
 
-	/*//Key generation
-	cout << "Enter 8 - character keyword to be used: " << endl;
+	//Key generation
+	/*cout << "Enter 8 - character keyword to be used: " << endl;
 	getline(cin, keyinput);
 
 	ks.setkeyInput(keyinput); 
@@ -45,6 +45,8 @@ int main()
 	cout << endl;
 	ks.applyPC2();
 	*/
+
+
 
 	cout << endl;
 	system("pause");

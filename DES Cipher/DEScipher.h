@@ -15,10 +15,15 @@ class DES
 {
 
 private:
-	string message;	//message to be encrypted
 
-	int arr[8];
-	int asciitobin[8*8];
+	string message;	//message to be encrypted
+	vector<int> ascii;	//vector to hold each chracters converted to ascii.
+	vector<bitset<8>> PasciitoBin; //Plaintext in binary, each element in the vector is 8 bits long.
+	int PasciitoBinary_64_init[100][64]; 
+	int block = 0;
+	int PasciitoBinary_64_final[100][64];
+	int L0[100][32];
+	int R0[100][32];
 
 public:
 
@@ -30,9 +35,10 @@ public:
 
 	//Encryption
 	void prepMessage();
-	
+	void messagetoAscii();
+	void amestoBIN();		//Ascii converted plaintext to binary
+	void applyIP();
 
-	//Decryption
 
 };
 
