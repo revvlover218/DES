@@ -26,8 +26,8 @@ int main()
 	enc.setMessage(P);
 
 	enc.prepMessage();
-	cout << "Message" << endl;
-	cout << enc.getMessage();
+	cout << "Message:" << endl;
+	cout << enc.getMessage() << endl;
 
 	/*//Key generation
 	cout << "Enter 8 - character keyword to be used: " << endl;

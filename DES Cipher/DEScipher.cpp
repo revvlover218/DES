@@ -42,7 +42,53 @@ void DES::prepMessage()
 	for (int i = 0; i < message.length(); i++)		//Converts each character to upper case
 		message[i] = static_cast<char>(toupper(message[i]));
 
+	if (message.length() < 8)	//if length of plaintext is less than 8 insert filler characters.
+	{
 
+		char filler; //default filler character
+		int testfillq = 0; //test if filler character exists in message, if it does (testfill = 1) use next character
+		int testfillx = 0;
+		int testfillz = 0;
+
+		int len; //subtract 8 from plaintext length
+		string fillerarr;
+
+		//Find appropriate filler character
+		for (int i = 0; i < message.length(); i++)
+		{
+
+			if (message[i] == 'Q')
+				testfillq = 1;
+			if (message[i] == 'X')
+				testfillx = 1;
+			if (message[i] == 'Z')
+				testfillz = 1;
+		}
+
+		if (testfillx == 0)
+			filler = 'X';
+		else if (testfillz == 0)
+			filler = 'Z';
+		else if (testfillq == 0)
+			filler = 'Q';
+		else
+			filler = 'X';
+
+		cout << "Plaintext length is less than 8 using filler characters as well." << endl;
+		cout << "Plaintext length: " << message.length() << endl;
+
+		len = 8 - message.length();
+
+		for (int i = 0; i < len; i++)	//create string of filler characters to append to keyinput
+			fillerarr += filler;		//to make length of 8 characters.
+		message.append(fillerarr);
+
+		cout << "New Plaintext length: " << message.length() << endl;
+		cout << "Final Message: " << endl;
+		cout << message << endl;
+
+		//stringtoASCII(keyinput); //convert string to ascii integers
+	}
 
 
 
