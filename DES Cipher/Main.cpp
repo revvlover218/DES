@@ -17,10 +17,19 @@ int main()
 	keySchedule ks;
 
 	string keyinput;
+	string P;
 	int count = 0;
 
+	//Get message
+	cout << "Enter message to be encrypted: " << endl;
+	getline(cin, P);
+	enc.setMessage(P);
 
+	enc.prepMessage();
+	cout << "Message" << endl;
+	cout << enc.getMessage();
 
+	/*//Key generation
 	cout << "Enter 8 - character keyword to be used: " << endl;
 	getline(cin, keyinput);
 
@@ -35,7 +44,7 @@ int main()
 	ks.applyRotation();
 	cout << endl;
 	ks.applyPC2();
-
+	*/
 
 	cout << endl;
 	system("pause");

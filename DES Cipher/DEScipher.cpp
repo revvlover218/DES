@@ -12,15 +12,19 @@
 
 using namespace std;
 
+/////////////////////////////////Class DES///////////////////////////////////////
+//Constructor
 DES::DES(){}
-
+//Destructor
 DES::~DES(){}
 
+///Accessor
 string DES::getMessage()
 {
 	return message;
 }
 
+//Mutator
 void DES::setMessage(string m)
 {
 	message = m;
@@ -29,7 +33,21 @@ void DES::setMessage(string m)
 void DES::prepMessage()
 {
 
-	string mes = message; 
+	for (int i = 0; i < message.length(); i++) //Remove spaces
+	{
+		if (message[i] == ' ')
+			message.erase(i, 1);
+	}
+
+
+
+
+
+
+
+
+
+/*	string mes = message; 
 	char filler; //default filler character
 	int testfillq = 0; //test if filler character exists in message, if it does 
 	int testfillx = 0; //(testfill = 1) use next character (Q, X, Z)
@@ -71,7 +89,7 @@ void DES::prepMessage()
 	for (int i = 0; i < mes.length(); i++)
 		mes[i] = static_cast<char>(toupper(mes[i]));	//Converts each character to upper case
 
-	message = mes;
+	message = mes;*/
 
 }
 
