@@ -19,18 +19,18 @@ int main()
 	string keyinput;
 	string P;
 	int count = 0;
+	int enc_Key[16][48];
 
 	//Get message
-	cout << "Enter message to be encrypted: " << endl;
+/*	cout << "Enter message to be encrypted: " << endl;
 	getline(cin, P);
 
 	enc.setMessage(P);
 	enc.prepMessage();
-	enc.applyIP();
-	
+	enc.applyIP();*/	
 
 	//Key generation
-	/*cout << "Enter 8 - character keyword to be used: " << endl;
+	cout << "Enter 8 - character keyword to be used: " << endl;
 	getline(cin, keyinput);
 
 	ks.setkeyInput(keyinput); 
@@ -44,9 +44,35 @@ int main()
 	ks.applyRotation();
 	cout << endl;
 	ks.applyPC2();
-	*/
 
+	system("pause");
+	system("cls");
 
+	//Create a copy of the final key from the keySchedule class to be used in encryption in the DES clas
+	for (int i = 0; i < 16; i++)
+	{
+
+		for (int j = 0; j < 48; j++)
+			enc.setEncKey(i, j, ks.getFinalKey(i, j));
+	}
+
+	for (int i = 0; i < 16; i++)
+	{
+
+		int k = 1;
+		cout << "\nGet copied Key Round: " << i + 1 << endl;
+
+		while (k <= 48)
+		{
+
+			cout << enc.getEncKey(i, k - 1);
+
+			if (k % 6 == 0)
+				cout << "\t";
+			k++;
+		}
+	}
+	
 
 	cout << endl;
 	system("pause");

@@ -25,20 +25,29 @@ private:
 	int L0[100][32];
 	int R0[100][32];
 
+	int enc_key[16][48]; //Store key for encryption
+
 public:
 
 	DES();
 	~DES();
+	
+	//Accessor and Mutator functions
+	//Accessor
 
 	string getMessage();
+	int getEncKey(int, int);
+
+	//Mutator
 	void setMessage(string);
+	void setEncKey(int, int, int);
 
 	//Encryption
 	void prepMessage();
 	void messagetoAscii();
 	void amestoBIN();		//Ascii converted plaintext to binary
 	void applyIP();
-
+	void encrypt();
 
 };
 
@@ -60,8 +69,7 @@ private:
  int CnR[28];			//Result of Cn and Dn after rotation.
  int DnR[28]; 
 
- int finalKey[16][48]; 
-
+ int finalKey[16][48];		//finalKey- 2D array which holds all 16 keys generated and after PC2 is applied.
 
 public:
 	//Accessor and Mutator functions
@@ -70,6 +78,7 @@ public:
 	string getkeyInput(); 
 	int getasciiInt(int);
 	bitset<8> getasccitoBin(int);
+	int getFinalKey(int, int);
 	
 	//Mutator
 	void setkeyInput(string);

@@ -24,12 +24,24 @@ string DES::getMessage()
 	return message;
 }
 
+int DES::getEncKey(int i, int j)
+{
+	return enc_key[i][j];
+}
+
 //Mutator
 void DES::setMessage(string m)
 {
 	message = m;
 }
 
+void DES::setEncKey(int i, int j, int bin)
+{
+	enc_key[i][j] = bin;
+}
+
+
+//Methods
 void DES::prepMessage()
 {
 
@@ -291,6 +303,11 @@ int keySchedule::getasciiInt(int i)
 bitset<8> keySchedule::getasccitoBin(int i)
 {
 	return asciitoBin[i];
+}
+
+int keySchedule::getFinalKey(int i, int j)
+{
+	return finalKey[i][j];
 }
 
 //Mutator
@@ -590,4 +607,6 @@ void keySchedule::applyPC2()
 			k++;
 		}
 	}
+
+	cout << endl;
 }
