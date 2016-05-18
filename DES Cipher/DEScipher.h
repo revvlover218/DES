@@ -20,12 +20,20 @@ private:
 	vector<int> ascii;	//vector to hold each chracters converted to ascii.
 	vector<bitset<8>> PasciitoBin; //Plaintext in binary, each element in the vector is 8 bits long.
 	int PasciitoBinary_64_init[100][64]; 
+	
 	int block = 0;
+
 	int PasciitoBinary_64_final[100][64];
 	int L0[100][32];
 	int R0[100][32];
 
 	int enc_key[16][48]; //Store key from keySchedule class for encryption
+
+	int L[17][32];		//For each round, final Left and Right matrices of 32 bits are stored in L and R.
+	int R[17][32];
+
+	int R_Expand[48]; //Array to hold R value after expansion table has been applied
+
 
 public:
 

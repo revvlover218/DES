@@ -78,10 +78,6 @@ int main()
 	enc.applyIP();
 	enc.encrypt();
 
-
-
-
-
 	cout << endl;
 	system("pause");
 	return 0;

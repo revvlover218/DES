@@ -287,10 +287,71 @@ void DES::applyIP()
 void DES::encrypt()
 {
 
+	//Expansion table
+	int Extable[48] = { 32, 1, 2, 3, 4, 5,
+		4, 5, 6, 7, 8, 9,
+		8, 9, 10, 11, 12, 13,
+		12, 13, 14, 15, 16, 17,
+		16, 17, 18, 19, 20, 21,
+		20, 21, 22, 23, 24, 25,
+		24, 25, 26, 27, 28, 29,
+		28, 29, 30, 31, 32, 1 };
+
+	system("cls");
+
+	//Run a loop for each block
+	for (int b = 0; b < block; b++)
+	{
+
+		cout << "Block number: " << b << endl;
+
+		//copy each block into L and R
+		for (int i = 0; i < 32; i++)
+		{
+			L[0][i] = L0[b][i];
+			R[0][i] = R0[b][i];
+		}
+		
+		cout << "Left initial block: " << endl;
+		for (int i = 0; i < 32; i++)
+		{
+			cout << L[0][i];
+		}
+
+		cout << endl;
+
+		cout << "\nRight initial block: " << endl;
+		for (int i = 0; i < 32; i++)
+		{
+			cout << R[0][i];
+		}
+
+		//start 16 round key encryption
+		for (int round = 0; round < 16; round++)
+		{
+
+
+			//L(n) = R(n-1)
+			for (int i = 0; i < 64; i++)
+			{
+				L[round + 1][i] = R[round][i];
+			}
+
+			cout << "\nApplying Expansion table to 32- bits to get 48- bits." << endl;
+
+			for (int i = 0; i < 48; i++)
+			{
+				R_Expand[i] = R[round][Extable[i]-1];
+			}
+
+
+
+		}
 
 
 
 
+	}
 
 
 }
