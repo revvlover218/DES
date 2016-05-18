@@ -7,6 +7,7 @@
 #include "iostream"
 #include "string"
 #include "DEScipher.h"
+#include "bitset"
 
 using namespace std;
 
@@ -76,7 +77,10 @@ int main()
 	enc.setMessage(P);
 	enc.prepMessage();
 	enc.applyIP();
+	
+	
 	enc.encrypt();
+
 
 	cout << endl;
 	system("pause");

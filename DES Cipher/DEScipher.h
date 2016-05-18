@@ -36,6 +36,7 @@ private:
 	int R_group[8][6];		//2D array to hold 48- bits into 8 groups of 6- bits so that the S- boxes can be applied to
 							//it.
 	int R_SB[32];		//Store the 32- bit result of S-box
+	int R_Pbox[32];		//Store result after P- box permutation.
 
 public:
 

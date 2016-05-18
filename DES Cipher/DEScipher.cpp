@@ -405,9 +405,12 @@ void DES::encrypt()
 			}
 
 			cout << "\nApplying S- Box to each group." << endl;
-			int n = 0;
-			int num = 0; //Stores the result of the S-box
-			
+			int j = 0;		
+			bitset<4> num;		//Stores the result of the S-box. Storing an integer in a bitset data type automatically 
+								//converts it to binary.
+			int temp[4];		//temp array which stores num in the correct order.
+
+
 			for (int i = 0; i < 8; i++)
 			{
 
@@ -474,14 +477,23 @@ void DES::encrypt()
 					num = sbox8[row][column]; 
 				}
 
+				//Convert num to binary
+				//in bitset data type, num is stored in the reverse order. Hence, to store num in temp in the correct order
+				//start from last element and go backwards.
+				int k = 0;
+				for (int i = 3; i > -1; i--)
+				{
+					temp[k] = num[i];
+					k++;
+				}
 
-
-
-
-
-
-
-			}
+				//Combine each result to get a 32- bit number
+				for (int i = 0; i < 4; i++)
+				{
+					R_SB[j] = temp[i];
+					j++;
+				}
+			} //End S- Box
 
 
 
