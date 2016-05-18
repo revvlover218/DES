@@ -326,6 +326,7 @@ void DES::encrypt()
 			cout << R[0][i];
 		}
 
+		////////////////////////////////
 		//start 16 round key encryption
 		for (int round = 0; round < 16; round++)
 		{
@@ -337,12 +338,36 @@ void DES::encrypt()
 				L[round + 1][i] = R[round][i];
 			}
 
-			cout << "\nApplying Expansion table to 32- bits to get 48- bits." << endl;
-
+			cout << "\n\nApplying Expansion table to 32- bits to get 48- bits." << endl;
 			for (int i = 0; i < 48; i++)
 			{
 				R_Expand[i] = R[round][Extable[i]-1];
 			}
+
+			cout << "\nTaking expanded R and XOR with key: " << round + 1 << endl;
+			for (int i = 0; i < 48; i++)
+			{
+				R_Expand[i] = R_Expand[i] ^ enc_key[round][i];
+			}
+
+			cout << "\nGrouping 48- bits into 8 groups of 6- bits so that S- box can be applied." << endl;
+			int k = 0;
+			for (int i = 0; i < 8; i++)
+			{					
+
+				for (int j = 0; j < 6; j++)
+				{
+
+					R_group[i][j] = R_Expand[k];
+					k++;
+				}
+			}
+
+			
+
+
+
+
 
 
 
