@@ -338,6 +338,13 @@ void DES::encrypt()
 	{ 7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8 },
 	{ 2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11 } };
 
+	//P- Box
+	int Pbox[32] = { 16, 7, 20, 21, 29, 12, 28, 17,
+		1, 15, 23, 26, 5, 18, 31, 10,
+		2, 8, 24, 14, 32, 27, 3, 9,
+		19, 13, 30, 6, 22, 11, 4, 25 };
+
+
 	system("cls");
 
 	//Run a loop for each block
@@ -495,9 +502,11 @@ void DES::encrypt()
 				}
 			} //End S- Box
 
-
-
-
+			cout << "\nApplying P- Box to permute the 32- bits." << endl;
+			for (int i = 0; i < 32; i++)
+			{
+				R_Pbox[i] = R_SB[Pbox[i]];
+			}
 
 
 		}
