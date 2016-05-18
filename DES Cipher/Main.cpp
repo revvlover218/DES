@@ -19,16 +19,12 @@ int main()
 	string keyinput;
 	string P;
 	int count = 0;
-	int enc_Key[16][48];
 
-	//Get message
-/*	cout << "Enter message to be encrypted: " << endl;
-	getline(cin, P);
+	cout << "DES Cipher" << endl;
 
-	enc.setMessage(P);
-	enc.prepMessage();
-	enc.applyIP();*/	
-
+	system("pause");
+	system("cls");
+	
 	//Key generation
 	cout << "Enter 8 - character keyword to be used: " << endl;
 	getline(cin, keyinput);
@@ -45,9 +41,6 @@ int main()
 	cout << endl;
 	ks.applyPC2();
 
-	system("pause");
-	system("cls");
-
 	//Create a copy of the final key from the keySchedule class to be used in encryption in the DES clas
 	for (int i = 0; i < 16; i++)
 	{
@@ -56,7 +49,7 @@ int main()
 			enc.setEncKey(i, j, ks.getFinalKey(i, j));
 	}
 
-	for (int i = 0; i < 16; i++)
+/*	for (int i = 0; i < 16; i++)
 	{
 
 		int k = 1;
@@ -71,8 +64,23 @@ int main()
 				cout << "\t";
 			k++;
 		}
-	}
+	}*/
+
+	system("pause");
+	system("cls");
 	
+	//Get message
+	cout << "Enter message to be encrypted: " << endl;
+	getline(cin, P);
+
+	enc.setMessage(P);
+	enc.prepMessage();
+	enc.applyIP();
+	enc.encrypt();
+
+
+
+
 
 	cout << endl;
 	system("pause");

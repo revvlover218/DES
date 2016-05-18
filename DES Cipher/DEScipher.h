@@ -25,7 +25,7 @@ private:
 	int L0[100][32];
 	int R0[100][32];
 
-	int enc_key[16][48]; //Store key for encryption
+	int enc_key[16][48]; //Store key from keySchedule class for encryption
 
 public:
 

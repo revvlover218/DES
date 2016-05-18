@@ -40,7 +40,6 @@ void DES::setEncKey(int i, int j, int bin)
 	enc_key[i][j] = bin;
 }
 
-
 //Methods
 void DES::prepMessage()
 {
@@ -285,6 +284,16 @@ void DES::applyIP()
 	system("pause");
 }
 
+void DES::encrypt()
+{
+
+
+
+
+
+
+
+}
 
 
 ////////////////////////////Key Schdeule//////////////////////////////////////
