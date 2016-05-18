@@ -418,14 +418,67 @@ void DES::encrypt()
 				//converted to decimal.
 				int column = ((R_group[i][1] * 8) + (R_group[i][2] * 4)	+ (R_group[i][3] * 2) + (R_group[i][4]));
 
-				if (i == 0) { num = sbox1[row][column]; }
-				if (i == 1) { num = sbox2[row][column]; }
-				if (i == 2) { num = sbox3[row][column]; }
-				if (i == 3) { num = sbox4[row][column]; }
-				if (i == 4) { num = sbox5[row][column]; }
-				if (i == 5) { num = sbox6[row][column]; }
-				if (i == 6) { num = sbox7[row][column]; }
-				if (i == 7) { num = sbox8[row][column]; }
+				if (i == 0) 
+				{ 
+
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox1[row][column]; 
+				}
+				
+				if (i == 1) 
+				{
+
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox2[row][column]; 
+				}
+				
+				if (i == 2) 
+				{ 
+
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox3[row][column]; 
+				}
+				
+				if (i == 3) 
+				{
+
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox4[row][column]; 
+				}
+				
+				if (i == 4) 
+				{ 
+
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox5[row][column]; 
+				}
+
+				if (i == 5) 
+				{ 
+					
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox6[row][column]; 
+				}
+
+				if (i == 6) 
+				{ 
+					
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox7[row][column]; 
+				}
+
+				if (i == 7) 
+				{
+					
+					cout << "S- Box: " << i + 1 << " applied." << endl;
+					num = sbox8[row][column]; 
+				}
+
+
+
+
+
+
 
 
 			}
