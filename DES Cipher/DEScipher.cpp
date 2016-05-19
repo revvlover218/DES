@@ -345,7 +345,6 @@ void DES::encrypt()
 		2, 8, 24, 14, 32, 27, 3, 9,
 		19, 13, 30, 6, 22, 11, 4, 25 };
 
-
 	system("cls");
 
 	//Run a loop for each block
@@ -631,7 +630,6 @@ void DES::bintoAscii(vector<int> temp)
 
 	finalascii.push_back(sum);
 }
-
 
 ////////////////////////////Key Schdeule//////////////////////////////////////
 

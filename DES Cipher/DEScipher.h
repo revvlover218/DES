@@ -84,30 +84,35 @@ public:
 						//Thereafter, function splits each block into halves of 32- bits L(0) and R(0) required for 
 						//encryption rounds.
 
-	void encrypt();		//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	void encrypt();		//For encryption L and R store the 32- bit results to be used for the next round. A loop is run for
+						//each block. The initial L(0) and R(0) of each block is copied into L and R and then the 16 
+						//round encryption begins. L is taken care of since it only requires R i.e. L(n) = R(n-1)
+						//Therafter, R is taken care of. First, expansion table is applied to R to convert the 32- bits 
+						//into 48- bits. This result is stored in R_Expand[48]. Next, the required key for that round 
+						//is XORed with R_Expand and the result is stored back in R_Expand. The next step is to group  
+						//the 48 bits together so that the S- box can be applied. The 48- bits are split into 8 groups
+						//each containing 6- bits. The result is stored in the 2D array, R_group[8][6].
+						//Furthermore, for the 8 groups there are 8 S- boxes. So S- box1 is applied to group 1, S- box 2 is
+						//applied to group 2 and so fourth. All S- boxes have 4 rows(0 - 3) and 16 columns (0 - 15)
+						//and each element is an integer, a 4- bit number in binary. To get the row number the first and 
+						//last bit in each group is converted to decimal. To get the column number the middle 4- bits 
+						//in each group is converted to decimal. The result returned from  the S- box is an integer,
+						//therefore, it needs to be converted to binary so that the next table can be applied to it. 
+						//The bitset data type is again used, whereby storing an integer in a bitset of N- bits
+						//(defined by the user = 4) is type casted to binary. However, it must also be noted that the bits
+						//are stored in the reverse order, therefore, a loop is used to traverse the bitset data from 
+						//the last element and store it in the correct order in a temporary array. Now that the 4- bits 
+						//are in the correct order it is then stored in R_SB[32] and since, the result is applied 
+						//to 8 groups, in total there is 32- bits. Next, the P- box is applied to the 32- bits. The
+						//P- box changes the positions of the bits in R_SB and the result is stored in R_PBox[32].
+						//To get R for this round the result R_PBox is XORed with L. Thus completing one round of 
+						//encryption. At the end of the 16 rounds, L[16] and R[16] each contain 32- bits of the cipher text.
+						//8- bits at a time is taken from L[16] and then from R[16] until all 32- bits have been taken and
+						//are copied into a temporary vector, which is passed as a parameter to bintoAscii and once the 
+						//integer value has been calculated, the result is stored in the vector finalAscii. Nevertheless,
+						//finalAscii stores the ascii code for each block, in other words, finalAscii contains the 
+						//ciphertext in ascii code. Getting the characters is essentially type casting each ascii integer
+						//to data type: char, completing the encryption of the ciphertext.
 
 	void bintoAscii(vector<int>);		//Takes in as a parameter a vector which contains an 8- bit binary number and 
 										//converts it to its equivalent integer. This result is stored in the finalascii
