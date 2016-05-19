@@ -80,9 +80,11 @@ public:
 							//PasciitoBinary_64_init[number of blocks][64]. This is required so that the initial 
 							//permutation, IP can be applied to each block.
 
-	void applyIP();		//
+	void applyIP();		//Apply Initial permutattion table to each block. IP changes the positions of the bits in each block.
+						//Thereafter, function splits each block into halves of 32- bits L(0) and R(0) required for 
+						//encryption rounds.
+
 	void encrypt();
-	void bintoAscii();
 	void bintoAscii(vector<int>);
 
 };
