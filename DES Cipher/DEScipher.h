@@ -84,9 +84,34 @@ public:
 						//Thereafter, function splits each block into halves of 32- bits L(0) and R(0) required for 
 						//encryption rounds.
 
-	void encrypt();
-	void bintoAscii(vector<int>);
+	void encrypt();		//
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	void bintoAscii(vector<int>);		//Takes in as a parameter a vector which contains an 8- bit binary number and 
+										//converts it to its equivalent integer. This result is stored in the finalascii
+										//vector.
 };
 
 class keySchedule
