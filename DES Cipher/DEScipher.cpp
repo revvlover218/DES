@@ -387,7 +387,7 @@ void DES::encrypt()
 			for (int i = 0; i < 48; i++)
 				R_Expand[i] = R[round][Extable[i]-1];
 			
-			cout << "\nTaking expanded R and XOR with key: " << round + 1 << endl;
+			cout << "\nTaking expanded R and XOR with key: " << round << endl;
 			for (int i = 0; i < 48; i++)
 				R_Expand[i] = R_Expand[i] ^ enc_key[round][i];		//'^' used to implement XOR operation 
 			
@@ -504,7 +504,7 @@ void DES::encrypt()
 			for (int i = 0; i < 32; i++)
 				R_Pbox[i] = R_SB[Pbox[i]-1];
 			
-			cout << "\nTaking permuted R and XOR with L: " << round + 1 << endl;
+			cout << "\nTaking permuted R and XOR with L: " << round << endl;
 			for (int i = 0; i < 32; i++)
 				R[round + 1][i] = L[round][i] ^ R_Pbox[i];
 			
@@ -574,7 +574,6 @@ void DES::encrypt()
 
 				if (g % 8 == 0)
 					cout << endl;
-				
 			}
 
 			g++;
@@ -753,13 +752,13 @@ void keySchedule::stringtoASCII(string keyinput)
 void keySchedule::asciitoBIN()
 {
 
-	//Store ascii numbers in binary data type which automatically converts integers to binary
+	//Store ascii numbers in binary data type which automatically converts integers to binary.
 	for (int i = 0; i < 8; i++)
 	{
 		asciitoBin[i] = asciiInt[i];
 	}
 
-	//Store binary numbers into integer array so that PC1 can be applied to it
+	//Store binary numbers into integer array so that PC1 can be applied to it.
 	int k = 0;
 
 	for (int i = 0; i < 8; i++)
