@@ -38,7 +38,9 @@ private:
 	int R_SB[32];		//Store the 32- bit result of S-box
 	int R_Pbox[32];		//Store result after P- box permutation.
 
-	vector<int> binarytoAscii;
+	//vector<int> binarytoAscii;
+	int binarytoAscii[8];
+	vector<int>tempascii;
 	vector<int> finalascii;
 
 public:
@@ -63,6 +65,7 @@ public:
 	void applyIP();
 	void encrypt();
 	void bintoAscii();
+	void bintoAscii(vector<int>);
 
 };
 

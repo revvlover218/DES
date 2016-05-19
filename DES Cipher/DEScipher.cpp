@@ -381,7 +381,7 @@ void DES::encrypt()
 
 
 			//L(n) = R(n-1)
-			for (int i = 0; i < 64; i++)
+			for (int i = 0; i < 32; i++)
 			{
 				L[round + 1][i] = R[round][i];
 			}
@@ -412,7 +412,7 @@ void DES::encrypt()
 			}
 
 			cout << "\nApplying S- Box to each group." << endl;
-			int j = 0;		
+				
 			bitset<4> num;		//Stores the result of the S-box. Storing an integer in a bitset data type automatically 
 								//converts it to binary.
 			int temp[4];		//temp array which stores num in the correct order.
@@ -486,7 +486,7 @@ void DES::encrypt()
 
 				//Convert num to binary
 				//in bitset data type, num is stored in the reverse order. Hence, to store num in temp in the correct order
-				//start from last element and go backwards.
+				//start from last element.
 				int k = 0;
 				for (int i = 3; i > -1; i--)
 				{
@@ -494,6 +494,7 @@ void DES::encrypt()
 					k++;
 				}
 
+				int j = 0;
 				//Combine each result to get a 32- bit number
 				for (int i = 0; i < 4; i++)
 				{
@@ -505,7 +506,7 @@ void DES::encrypt()
 			cout << "\nApplying P- Box to permute the 32- bits." << endl;
 			for (int i = 0; i < 32; i++)
 			{
-				R_Pbox[i] = R_SB[Pbox[i]];
+				R_Pbox[i] = R_SB[Pbox[i]-1];
 			}
 
 
@@ -517,7 +518,11 @@ void DES::encrypt()
 
 
 			cout << "\n\nRound: " << round + 1 << endl;
-
+				
+			cout << "\nKey: " << round + 1 << endl;
+			for (int i = 0; i < 48; i++)
+				cout << enc_key[round][i];
+			
 			cout << "\nL: " << round + 1 << endl;
 			for (int i = 0; i < 32; i++)
 				cout << L[round + 1][i];
@@ -526,67 +531,92 @@ void DES::encrypt()
 			for (int i = 0; i < 32; i++)
 				cout << R[round + 1][i];
 
-			cout << "\nKey: " << round + 1 << endl;
-			for (int i = 0; i < 48; i++)
-				cout << enc_key[round][i];
-		}
+		}//end round
 
-		cout << "\n\nFor final round: Binary R16 L16:" << endl;
-		for (int i = 0; i<32; i++)
-			cout << R[16][i];			
+		cout << "\n\nAfter final round: " << endl;
 		
-		cout << "\t";
-		for (int i = 0; i<32; i++)
-			cout << L[16][i];		
+		cout << "L16: " << endl;
+		int h = 1;
 
-		bintoAscii();
-
-		cout << "\n\nAscii integers: " << endl;
-		for (int i = 0; i < 8; i++)
+		//for (int i = 0; i < 32; i++)
+		while (h <= 32)
 		{
-			cout << binarytoAscii[i];
-			finalascii.push_back((int)binarytoAscii[i]);
+
+			cout << L[16][h-1];
+			tempascii.push_back(L[16][h - 1]);
+			if (tempascii.size() == 8)
+			{
+
+				bintoAscii(tempascii);
+				tempascii.clear();
+			}
+			if (h > 0)
+			{
+				if (h % 8 == 0)
+				{
+					cout << endl;
+				}
+			}
+			h++;
 		}
 
-		cout << "\n\nAscii characters: " << endl;
-		for (int i = 0; i < 8; i++)
+		cout << "\nR16: " << endl;
+		int g = 1;
+
+		//for (int i = 0; i < 32; i++)
+		while (g <= 32)
 		{
-			cout << (char)binarytoAscii[i] << "  ";
+
+			cout << R[16][g-1];
+			tempascii.push_back(R[16][g-1]);
+
+			if (tempascii.size() == 8)
+			{
+
+				bintoAscii(tempascii);
+				tempascii.clear();
+			}
+
+
+			if (g > 0)
+			{
+				if (g % 8 == 0)
+				{
+					cout << endl;
+				}
+			}
+			g++;
 		}
- 
+	}//end block
 
-	}
-
-
+	cout << "Combining blocks together and converting to ascii:" << endl;
+		cout << "Ascii codes: " << endl;
+		for (int i = 0; i < finalascii.size(); i++)
+		{
+			cout << finalascii[i] << "\t";
+		}
+		
+		cout << "\n\nEncrypted text: " << endl;
+		for (int i = 0; i < finalascii.size(); i++)
+		{
+			cout << (char)finalascii[i];
+		}
 }
 
-void DES::bintoAscii()
+void DES::bintoAscii(vector<int> temp)
 {
 
-	binarytoAscii.resize(8 * sizeof(int));		//resize it for 8-bit storage
-	int incr = 0, k = 7;							//allows to access the next 8 bits in word
+	int k = 7;
+	int sum = 0;
 
-	//Binary bits are weighted according to their position and decoded as follows:
-	/*
-	1		0		0		1		0		1		1		1
-	2^7 +  0^6	+  0^5	+	2^4	+	0^3	+	2^2	+	2^1	+	2^0 = 151
-	2^k where k=7
-	Decrement k each time and make the sum
-	use MODULO 2^(k%8) so viz. 2^18 = 2^2 for weighting blocks beyond the first one
-	*/
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < temp.size(); i++)
 	{
-		for (int j = 0 + incr; j < 8 + incr; j++)
-		{
-			binarytoAscii[i] = binarytoAscii[i] + R[16][j] * pow(2, k % 8);
-			binarytoAscii[i + 4] = binarytoAscii[i + 4] + L[16][j] * pow(2, k % 8);
-			k--;
-		}
-		incr += 8;							//if one 'word' of 8-bits is done, skip to the next one
+
+		sum += temp[i] * pow(2, k);
+		k--;
 	}
 
-
+	finalascii.push_back(sum);
 }
 
 

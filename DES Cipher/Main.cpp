@@ -50,23 +50,6 @@ int main()
 			enc.setEncKey(i, j, ks.getFinalKey(i, j));
 	}
 
-/*	for (int i = 0; i < 16; i++)
-	{
-
-		int k = 1;
-		cout << "\nGet copied Key Round: " << i + 1 << endl;
-
-		while (k <= 48)
-		{
-
-			cout << enc.getEncKey(i, k - 1);
-
-			if (k % 6 == 0)
-				cout << "\t";
-			k++;
-		}
-	}*/
-
 	system("pause");
 	system("cls");
 	
