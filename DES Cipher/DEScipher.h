@@ -71,9 +71,6 @@ public:
 							//called to convert each character to its equivalent ASCII code.
 
 	void messagetoAscii();		//convert each character to ascci and store the result in vector: ascii
-
-
-
 	void amestoBIN();		//Ascii converted plaintext to binary
 	void applyIP();
 	void encrypt();

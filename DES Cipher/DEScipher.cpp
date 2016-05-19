@@ -130,8 +130,8 @@ void DES::prepMessage()
 void DES::messagetoAscii()
 {
 
-	for (int i = 0; i < message.length(); i++)		//Type cast string to integer
-		ascii.push_back((int)message[i]);
+	for (int i = 0; i < message.length(); i++)		//Type cast string to integer.
+		ascii.push_back((int)message[i]);			//store result in ascii vector.
 
 	cout << "\nEquivalent ASCII integers: " << endl;
 	for (int i = 0; i < ascii.size(); i++)
@@ -142,7 +142,7 @@ void DES::messagetoAscii()
 		cout << ascii[i] << " ";
 	}
 		
-	amestoBIN(); //ascii message to binary
+	amestoBIN(); //convert ascii message to binary
 }
 
 void DES::amestoBIN()
