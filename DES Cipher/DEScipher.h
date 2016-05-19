@@ -38,6 +38,9 @@ private:
 	int R_SB[32];		//Store the 32- bit result of S-box
 	int R_Pbox[32];		//Store result after P- box permutation.
 
+	vector<int> binarytoAscii;
+	vector<int> finalascii;
+
 public:
 
 	DES();
@@ -59,6 +62,7 @@ public:
 	void amestoBIN();		//Ascii converted plaintext to binary
 	void applyIP();
 	void encrypt();
+	void bintoAscii();
 
 };
 

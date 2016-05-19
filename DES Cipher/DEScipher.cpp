@@ -509,11 +509,81 @@ void DES::encrypt()
 			}
 
 
+			cout << "\nTaking permuted R and XOR with L: " << round + 1 << endl;
+			for (int i = 0; i < 32; i++)
+			{
+				R[round + 1][i] = L[round][i] ^ R_Pbox[i];
+			}
+
+
+			cout << "\n\nRound: " << round + 1 << endl;
+
+			cout << "\nL: " << round + 1 << endl;
+			for (int i = 0; i < 32; i++)
+				cout << L[round + 1][i];
+
+			cout << "\nR: " << round + 1 << endl;
+			for (int i = 0; i < 32; i++)
+				cout << R[round + 1][i];
+
+			cout << "\nKey: " << round + 1 << endl;
+			for (int i = 0; i < 48; i++)
+				cout << enc_key[round][i];
 		}
 
+		cout << "\n\nFor final round: Binary R16 L16:" << endl;
+		for (int i = 0; i<32; i++)
+			cout << R[16][i];			
+		
+		cout << "\t";
+		for (int i = 0; i<32; i++)
+			cout << L[16][i];		
+
+		bintoAscii();
+
+		cout << "\n\nAscii integers: " << endl;
+		for (int i = 0; i < 8; i++)
+		{
+			cout << binarytoAscii[i];
+			finalascii.push_back((int)binarytoAscii[i]);
+		}
+
+		cout << "\n\nAscii characters: " << endl;
+		for (int i = 0; i < 8; i++)
+		{
+			cout << (char)binarytoAscii[i] << "  ";
+		}
+ 
+
+	}
 
 
+}
 
+void DES::bintoAscii()
+{
+
+	binarytoAscii.resize(8 * sizeof(int));		//resize it for 8-bit storage
+	int incr = 0, k = 7;							//allows to access the next 8 bits in word
+
+	//Binary bits are weighted according to their position and decoded as follows:
+	/*
+	1		0		0		1		0		1		1		1
+	2^7 +  0^6	+  0^5	+	2^4	+	0^3	+	2^2	+	2^1	+	2^0 = 151
+	2^k where k=7
+	Decrement k each time and make the sum
+	use MODULO 2^(k%8) so viz. 2^18 = 2^2 for weighting blocks beyond the first one
+	*/
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0 + incr; j < 8 + incr; j++)
+		{
+			binarytoAscii[i] = binarytoAscii[i] + R[16][j] * pow(2, k % 8);
+			binarytoAscii[i + 4] = binarytoAscii[i + 4] + L[16][j] * pow(2, k % 8);
+			k--;
+		}
+		incr += 8;							//if one 'word' of 8-bits is done, skip to the next one
 	}
 
 
