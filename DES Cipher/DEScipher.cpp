@@ -379,27 +379,21 @@ void DES::encrypt()
 		for (int round = 0; round < 16; round++)
 		{
 
-
 			//L(n) = R(n-1)
 			for (int i = 0; i < 32; i++)
-			{
 				L[round + 1][i] = R[round][i];
-			}
-
+			
 			cout << "\n\nApplying Expansion table to 32- bits to get 48- bits." << endl;
 			for (int i = 0; i < 48; i++)
-			{
 				R_Expand[i] = R[round][Extable[i]-1];
-			}
-
+			
 			cout << "\nTaking expanded R and XOR with key: " << round + 1 << endl;
 			for (int i = 0; i < 48; i++)
-			{
 				R_Expand[i] = R_Expand[i] ^ enc_key[round][i];		//'^' used to implement XOR operation 
-			}
-
+			
 			cout << "\nGrouping 48- bits into 8 groups of 6- bits so that S- box can be applied." << endl;
 			int k = 0;
+			
 			for (int i = 0; i < 8; i++)
 			{					
 
@@ -416,7 +410,6 @@ void DES::encrypt()
 			bitset<4> num;		//Stores the result of the S-box. Storing an integer in a bitset data type automatically 
 								//converts it to binary.
 			int temp[4];		//temp array which stores num in the correct order.
-
 
 			for (int i = 0; i < 8; i++)
 			{
@@ -488,16 +481,20 @@ void DES::encrypt()
 				//in bitset data type, num is stored in the reverse order. Hence, to store num in temp in the correct order
 				//start from last element.
 				int k = 0;
+
 				for (int i = 3; i > -1; i--)
 				{
+
 					temp[k] = num[i];
 					k++;
 				}
 
-				int j = 0;
 				//Combine each result to get a 32- bit number
+				int j = 0;
+
 				for (int i = 0; i < 4; i++)
 				{
+				
 					R_SB[j] = temp[i];
 					j++;
 				}
@@ -505,18 +502,13 @@ void DES::encrypt()
 
 			cout << "\nApplying P- Box to permute the 32- bits." << endl;
 			for (int i = 0; i < 32; i++)
-			{
 				R_Pbox[i] = R_SB[Pbox[i]-1];
-			}
-
-
+			
 			cout << "\nTaking permuted R and XOR with L: " << round + 1 << endl;
 			for (int i = 0; i < 32; i++)
-			{
 				R[round + 1][i] = L[round][i] ^ R_Pbox[i];
-			}
-
-
+			
+			//Display
 			cout << "\n\nRound: " << round + 1 << endl;
 				
 			cout << "\nKey: " << round + 1 << endl;
@@ -538,7 +530,6 @@ void DES::encrypt()
 		cout << "L16: " << endl;
 		int h = 1;
 
-		//for (int i = 0; i < 32; i++)
 		while (h <= 32)
 		{
 
@@ -550,20 +541,20 @@ void DES::encrypt()
 				bintoAscii(tempascii);
 				tempascii.clear();
 			}
+
 			if (h > 0)
 			{
-				if (h % 8 == 0)
-				{
+
+				if (h % 8 == 0)		//Display 8- bits at a time
 					cout << endl;
-				}
 			}
+
 			h++;
 		}
 
 		cout << "\nR16: " << endl;
 		int g = 1;
 
-		//for (int i = 0; i < 32; i++)
 		while (g <= 32)
 		{
 
@@ -580,28 +571,26 @@ void DES::encrypt()
 
 			if (g > 0)
 			{
+
 				if (g % 8 == 0)
-				{
 					cout << endl;
-				}
+				
 			}
+
 			g++;
 		}
 	}//end block
 
+	//Display Cipher text
 	cout << "\nCombining blocks together and converting to ascii." << endl;
 		cout << "Ascii codes: " << endl;
 		for (int i = 0; i < finalascii.size(); i++)
-		{
 			cout << finalascii[i] << "\t";
-		}
 		
 		cout << "\n\nEncrypted text: " << endl;
 		for (int i = 0; i < finalascii.size(); i++)
-		{
 			cout << (char)finalascii[i] << "\t";
-		}
-
+		
 		cout << "\n\n*Some ASCII characters cannot be displayed." << endl;
 }
 
