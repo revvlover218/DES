@@ -148,9 +148,9 @@ void DES::messagetoAscii()
 void DES::amestoBIN()
 {
 
-	int temp[64];
+	int temp[64]; //temp array to hold 64- bits at a time to be copied to PasciitoBinary_64_init.
 
-	//Store ascii numbers in binary data type which automatically converts integers to binary
+	//Store ascii numbers in binary data type which type casts integers to binary.
 	for (int i = 0; i < ascii.size(); i++)
 		PasciitoBin.push_back(ascii[i]);
 
@@ -173,7 +173,6 @@ void DES::amestoBIN()
 	}*/
 
 	int k = 0;
-	//int b = 0;
 
 		for (int i = 0; i < PasciitoBin.size(); i++)
 		{

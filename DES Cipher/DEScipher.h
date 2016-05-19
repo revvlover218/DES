@@ -18,7 +18,8 @@ private:
 
 	string message;							//Plaintext to be encrypted.
 	vector<int> ascii;						//vector to hold characters after being converted to ascii.
-	vector<bitset<8>> PasciitoBin;			//Vector + bitset data type to hold each ascii code converted to binary.
+	vector<bitset<8>> PasciitoBin;			//Vector + bitset data type, where each element in the vector
+											//holds an 8- bit binary number i.e., each ascii code converted to binary.
 	int PasciitoBinary_64_init[100][64];	//Copy all bits in blocks of 64 to 2D- array. 
 	
 	int block = 0;		//Track how many blocks are created. 1 block = 8 characters of plaintext = 8 ascii codes = 64- bits.
@@ -71,8 +72,15 @@ public:
 							//called to convert each character to its equivalent ASCII code.
 
 	void messagetoAscii();		//convert each character to ascci and store the result in vector: ascii
-	void amestoBIN();		//Ascii converted plaintext to binary
-	void applyIP();
+	void amestoBIN();		//Function which converts ascii numbers to binary using the bitset data type.
+							//When a number is stored in a bit set data type, the bitset essentially type casts
+							//the integer to an N- bit binary number (defined by user = 8). Nevertheless, this is also
+							//where the initial blocks of the plaintext is created, P(0), P(1) etc. Since one block
+							//is equal to 8 characters which is equal to 64- bits, take 64- bits at a time and store in
+							//PasciitoBinary_64_init[number of blocks][64]. This is required so that the initial 
+							//permutation, IP can be applied to each block.
+
+	void applyIP();		//
 	void encrypt();
 	void bintoAscii();
 	void bintoAscii(vector<int>);
