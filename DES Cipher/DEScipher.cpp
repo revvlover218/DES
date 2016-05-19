@@ -46,6 +46,7 @@ void DES::prepMessage()
 
 	for (int i = 0; i < message.length(); i++) //Remove spaces
 	{
+
 		if (message[i] == ' ')
 			message.erase(i, 1);
 	}
@@ -53,18 +54,18 @@ void DES::prepMessage()
 	for (int i = 0; i < message.length(); i++)		//Converts each character to upper case
 		message[i] = static_cast<char>(toupper(message[i]));
 
-	if (message.length() % 8 != 0)	//if length of plaintext is not 8 insert filler characters.
+	if (message.length() % 8 != 0)	//If length of plaintext is not 8 insert filler characters.
 	{
 
-		string fillerarr;		//default filler character
-		int testfillq = 0; //test if filler character exists in message, if it does (testfill = 1) use next character
+		//Find appropriate filler character
+		string fillerarr;		//default filler character = X
+		int testfillq = 0;		//test if filler character exists in message, if it does (testfill = 1) use next character
 		int testfillx = 0;
 		int testfillz = 0;
 
 		int len = message.length();
 		int filllength = 8 - (len % 8);
 		
-		//Find appropriate filler character
 		for (int i = 0; i < len; i++)
 		{
 
@@ -90,7 +91,7 @@ void DES::prepMessage()
 
 		for (int i = len; i < len + filllength; i++)
 		{
-			message.append(fillerarr);
+			message.append(fillerarr);		//Append filler characters to message to make length % 8 = 0.
 		}
 
 		len = message.length();
@@ -123,7 +124,7 @@ void DES::prepMessage()
 
 	}
 
-	messagetoAscii();
+	messagetoAscii();		//convert plaintext to ascii codes.
 }
 
 void DES::messagetoAscii()
@@ -589,7 +590,7 @@ void DES::encrypt()
 		}
 	}//end block
 
-	cout << "Combining blocks together and converting to ascii:" << endl;
+	cout << "\nCombining blocks together and converting to ascii." << endl;
 		cout << "Ascii codes: " << endl;
 		for (int i = 0; i < finalascii.size(); i++)
 		{
@@ -599,8 +600,10 @@ void DES::encrypt()
 		cout << "\n\nEncrypted text: " << endl;
 		for (int i = 0; i < finalascii.size(); i++)
 		{
-			cout << (char)finalascii[i];
+			cout << (char)finalascii[i] << "\t";
 		}
+
+		cout << "\n\n*Some ASCII characters cannot be displayed." << endl;
 }
 
 void DES::bintoAscii(vector<int> temp)
@@ -621,6 +624,10 @@ void DES::bintoAscii(vector<int> temp)
 
 
 ////////////////////////////Key Schdeule//////////////////////////////////////
+
+keySchedule::keySchedule(){}
+keySchedule::~keySchedule(){}
+
 //Accesoor and Mutator
 //Accessor
 string keySchedule::getkeyInput()

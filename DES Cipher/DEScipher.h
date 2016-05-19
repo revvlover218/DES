@@ -16,51 +16,64 @@ class DES
 
 private:
 
-	string message;	//message to be encrypted
-	vector<int> ascii;	//vector to hold each chracters converted to ascii.
-	vector<bitset<8>> PasciitoBin; //Plaintext in binary, each element in the vector is 8 bits long.
-	int PasciitoBinary_64_init[100][64]; 
+	string message;							//Plaintext to be encrypted.
+	vector<int> ascii;						//vector to hold characters after being converted to ascii.
+	vector<bitset<8>> PasciitoBin;			//Vector + bitset data type to hold each ascii code converted to binary.
+	int PasciitoBinary_64_init[100][64];	//Copy all bits in blocks of 64 to 2D- array. 
 	
-	int block = 0;
+	int block = 0;		//Track how many blocks are created. 1 block = 8 characters of plaintext = 8 ascii codes = 64- bits.
 
-	int PasciitoBinary_64_final[100][64];
-	int L0[100][32];
-	int R0[100][32];
+	int PasciitoBinary_64_final[100][64];		//After IP is applied result is stored here.
+	int L0[100][32];							//Split each block into 32-bits to create the initial left half and right  
+	int R0[100][32];							//half of each block.
 
-	int enc_key[16][48];		//Store key from keySchedule class for encryption
+	int enc_key[16][48];						//Store 16 generated keys from keySchedule class for encryption.
 
-	int L[17][32];		//For each round, final Left and Right matrices of 32- bits are stored in L and R.
+	int L[17][32];								//For each round, result Left and Right bits are stored in L and R.
 	int R[17][32];
 
-	int R_Expand[48];		//Array to hold R value after expansion table has been applied
-	int R_group[8][6];		//2D array to hold 48- bits into 8 groups of 6- bits so that the S- boxes can be applied to
+	int R_Expand[48];		//Holds the result of R after Expansion table has been applied and after R has been XORed 
+							//with the key for that round.
+	int R_group[8][6];		//2D array to hold the 48- bits into 8 groups of 6- bits so that the S- boxes can be applied to
 							//it.
-	int R_SB[32];		//Store the 32- bit result of S-box
+	int R_SB[32];		//Store the 32- bit result of S-box.
 	int R_Pbox[32];		//Store result after P- box permutation.
 
-	//vector<int> binarytoAscii;
-	int binarytoAscii[8];
-	vector<int>tempascii;
-	vector<int> finalascii;
+	vector<int>tempascii;		//Stores 8- bits at a time so that it can be converted to ascii.
+	vector<int> finalascii;		//Stores ascii codes converted from binary from both L and R.
 
 public:
 
-	DES();
-	~DES();
+	DES();		//Constructor
+	~DES();		//Destructor
 	
 	//Accessor and Mutator functions
 	//Accessor
 
 	string getMessage();
-	int getEncKey(int, int);
+	int getEncKey(int, int);	//Takes in as parameters i and j and returns the postion of (key) element in 2D- array.
 
 	//Mutator
 	void setMessage(string);
-	void setEncKey(int, int, int);
+	void setEncKey(int, int, int);	//Takes in as parameters, positions i, j and value and stores the result in enc_Key[i][j]
 
 	//Encryption
-	void prepMessage();
-	void messagetoAscii();
+	void prepMessage();		//Once the meesage has been received, this method first removes any spaces in the plaintext 
+							//and the converts all characters to upper case for consistency. Thereafter, a check of the 
+							//length of the plaintext is done. If the length of the plaintext is equal to 8, it implies that
+							//only 8 characters have been entered, hence only one block is to be encrypted. Else if the  
+							//length of the plaintext is not equal to 8 it leads to two cases. 1. The length of the text is
+							//less than 8 characters or 2. the length of the text is more than 8 characters. For
+							//case 1: Search for the appropriate filler character(X, Q, Z) and append an array of filler 
+							//characters to the meesage to make 8 characters = 1 block. For case 2: find appropriate
+							//filler character and append array of filler characters to the message such that the  
+							//length % 8 = 0, since each block = 8 characters. Lastly, messagetoAscii() is
+							//called to convert each character to its equivalent ASCII code.
+
+	void messagetoAscii();		//convert each character to ascci and store the result in vector: ascii
+
+
+
 	void amestoBIN();		//Ascii converted plaintext to binary
 	void applyIP();
 	void encrypt();
@@ -90,6 +103,10 @@ private:
  int finalKey[16][48];		//finalKey- 2D array which holds all 16 keys generated and after PC2 is applied.
 
 public:
+
+	keySchedule();		//Constructor 
+	~keySchedule();		//Destructor
+	
 	//Accessor and Mutator functions
 	//Accessor
 

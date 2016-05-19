@@ -21,7 +21,10 @@ int main()
 	string P;
 	int count = 0;
 
+	cout << "ENEL4SE - Security and Encryption." << endl;
 	cout << "DES Cipher" << endl;
+	cout << "Reshal Luchman" << endl;
+	cout << "213501051" << endl;
 
 	system("pause");
 	system("cls");
@@ -60,10 +63,8 @@ int main()
 	enc.setMessage(P);
 	enc.prepMessage();
 	enc.applyIP();
-	
-	
+		
 	enc.encrypt();
-
 
 	cout << endl;
 	system("pause");
