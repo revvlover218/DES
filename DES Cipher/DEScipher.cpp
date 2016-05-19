@@ -190,7 +190,7 @@ void DES::amestoBIN()
 						PasciitoBinary_64_init[block][l] = temp[l];
 					}
 					
-					block++;
+					block++; //increment block to store next set of 64- bits
 					k = 0;
 				}
 			}
