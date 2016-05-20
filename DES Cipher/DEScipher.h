@@ -129,7 +129,7 @@ private:
  
  string keyinput;
  int asciiInt[8];		//Array to hold converted ascii integers.
- bitset<8> asciitoBin[8];		//Stores binary version of ascii code where one element contains 8- bits.
+ bitset<8> asciitoBin[8];		//Stores binary version of ascii code where one element in the array contains 8- bits.
  int asciitoBinary_64[64];	//Stores all 8 characters = 8 ascii codes = 64- bits.
 
  int initialKey[17][56];	//Stores the result of PC1 (64- bit -> 56- bit).
@@ -170,7 +170,8 @@ public:
 							//and asciitoBIN functions are called to do the relevant conversions.
 
 	void stringtoASCII(string);	//Takes in as input the keyword after verification and converts each character to its 
-								//equivalent ascii integer code (type casting).
+								//equivalent ascii integer code (type casting). By default when characters are type casted
+								//to an integer it is stored as the ASCII equivalent number.
 	
 	void asciitoBIN();			//Once all characters have been converted to ascii, this function converts each integer
 								//to binary. The result is stored in a bitset data type. This function essentially type casts
@@ -188,8 +189,8 @@ public:
 						  //K[56] = C[28]*D[28].
 						  //A rotation is essentially left shifting a binary number while wrapping around the end of the 
 						  //binary number to the beginning.
-						  //When applying rotations, key rounds: 1, 2, 9, and 16 are rotated only once, while the other 
-						  //rounds are rotated twice.
+						  //When applying rotations, key rounds: 1, 2, 9, and 16 are rotated only once, while any other 
+						  //round is rotated twice.
 						  //Therefore, each half (C and D) is rotated and the result is the key for
 						  //for that round. Once a rotation for that round is complete it is combined and stored back in
 						  //initial key so that the PC- 2 table can be applied.
