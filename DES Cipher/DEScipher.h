@@ -101,7 +101,7 @@ public:
 						//last bit in each group is converted to decimal. To get the column number, the middle 4- bits 
 						//in each group is converted to decimal.. The result returned from the S- box is an integer,
 						//therefore, it needs to be converted to binary so that the next table can be applied to it. 
-						//The bitset data type is used, whereby storing an integer in a bitset of N- bits
+						//The bitset data type is again used, whereby storing an integer in a bitset of N- bits
 						//(defined by the user = 4) is type casted to binary. However, it must also be noted that the bits
 						//are stored in the reverse order, therefore, a loop is used to traverse the bitset data from 
 						//the last element and store it in the correct order in a temporary array. Now that the 4- bits 

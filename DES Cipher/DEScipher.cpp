@@ -599,7 +599,7 @@ void DES::bintoAscii(vector<int> temp)
 	/*8- bit binary number in temp is converted to integer as described below: 
 	Example: Say temp receives 10001101
 
-	Position:		            0	1	2	3	4	5	6	7	 
+	Position i:		            0	1	2	3	4	5	6	7	 
 	temp[i]:					1	0	0	0	1	1	0	1	
 	multiply by 2 ^ k:			7	6	5	4	3	2	1	0	
 	
